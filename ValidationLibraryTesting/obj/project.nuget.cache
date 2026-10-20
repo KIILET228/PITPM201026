@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UBlRnVMh5lI=",
+  "dgSpecHash": "DBOKPl0toYk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\221\\Students\\!!ISPP-41\\PractWork\\repo\\ValidationLibraryTesting\\ValidationLibraryTesting.csproj",
+  "projectFilePath": "C:\\Users\\221\\Students\\!!ISPP-41\\PractWork\\repo1\\PITPM201026\\ValidationLibraryTesting\\ValidationLibraryTesting.csproj",
   "expectedPackageFiles": [
     "C:\\NugetCache\\Packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
     "C:\\NugetCache\\Packages\\fluentassertions\\8.11.0\\fluentassertions.8.11.0.nupkg.sha512",
