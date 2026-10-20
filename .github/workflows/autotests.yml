@@ -30,7 +30,7 @@ jobs:
 
       - name: Build solution
         # Путь с прямым слэшем и правильным расширением
-        run: dotnet build ValidationLibrary/ValidationLibrary.sln --no-restore --configuration Release
+        run: dotnet build ValidationLibrary/ValidationLibrary.slnx --no-restore --configuration Release
 
       - name: Run tests
-        run: dotnet test ValidationLibrary/ValidationLibrary.sln --no-build --configuration Release --verbosity normal
+        run: dotnet test ValidationLibrary/ValidationLibrary.slnx --no-build --configuration Release --verbosity normal
