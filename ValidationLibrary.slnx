@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="../ValidationLibraryTesting/ValidationLibraryTesting.csproj" />
-  <Project Path="ValidationLibrary.csproj" />
+  <Project Path="ValidationLibraryTesting/ValidationLibraryTesting/ValidationLibraryTesting.csproj" />
+  <Project Path="ValidationLibrary/ValidationLibrary.csproj" />
 </Solution>
