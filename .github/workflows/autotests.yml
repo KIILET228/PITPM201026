@@ -3,47 +3,34 @@ name: .NET Regression Tests (Preview)
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Клонируем репозиторий
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Устанавливаем .NET. 
-      # ВАЖНО: include-prerelease: true обязателен для .NET 10
-      # Если у тебя в global.json указана конкретная версия (например, 10.0.100-preview...),
-      # лучше заменить '10.0.x' на эту точную строку без суффикса x.
+      - name: Check file exists (debug)
+        run: ls -la ValidationLibrary/
+
       - name: Setup .NET (Preview)
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.302' 
+          # !!! ВСТАВЬ СЮДА ПОЛНУЮ ВЕРСИЮ ИЗ dotnet --list-sdks !!!
+          # Пример: 10.0.100-preview.5.25307.4
+          dotnet-version: '10.0.302'
           include-prerelease: true
 
-      # 3. Восстанавливаем зависимости (NuGet пакеты)
-      # Кэширование можно добавить позже, если сборка будет слишком долгой
       - name: Restore dependencies
         run: dotnet restore
 
-      # 4. Собираем решение. 
-      # ЗАМЕНИ MySolution.sln на имя твоего файла решения!
       - name: Build solution
-        run: dotnet build ValidationLibrary\ValidationLibrary.slnx --no-restore --configuration Release
+        # Путь с прямым слэшем и правильным расширением
+        run: dotnet build ValidationLibrary/ValidationLibrary.sln --no-restore --configuration Release
 
-      # 5. Запускаем тесты. 
-      # Тесты тоже берутся из того же .sln файла
       - name: Run tests
-        run: dotnet test ValidationLibrary\ValidationLibrary.slnx --no-build --configuration Release --verbosity normal
+        run: dotnet test ValidationLibrary/ValidationLibrary.sln --no-build --configuration Release --verbosity normal
