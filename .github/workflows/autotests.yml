@@ -1,49 +1,27 @@
 name: .NET Regression Tests (Preview)
 
-on:
+on:		# Запускается при push и pull request файлов .cs в ветку master
   push:
     branches: [ "main" ]
-    paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
-
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-latest # ОС виртуальной машины
     steps:
-      # 1. Клонируем репозиторий
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4 # Клонирование репозитория на ВМ
 
-      # 2. Устанавливаем .NET. 
-      # ВАЖНО: include-prerelease: true обязателен для .NET 10
-      # Если у тебя в global.json указана конкретная версия (например, 10.0.100-preview...),
-      # лучше заменить '10.0.x' на эту точную строку без суффикса x.
-      - name: Setup .NET (Preview)
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.302' 
-          include-prerelease: true
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x' # Установка .NET 10 на ВМ
+      
+    - name: Restore dependencies
+      run: dotnet restore 		# Восстановление зависимостей
 
-      # 3. Восстанавливаем зависимости (NuGet пакеты)
-      # Кэширование можно добавить позже, если сборка будет слишком долгой
-      - name: Restore dependencies
-        run: dotnet restore
-
-      # 4. Собираем решение. 
-      # ЗАМЕНИ MySolution.sln на имя твоего файла решения!
-      - name: Build solution
-        run: dotnet build ValidationLibrary\ValidationLibrary.slnx --no-restore --configuration Release
-
-      # 5. Запускаем тесты. 
-      # Тесты тоже берутся из того же .sln файла
-      - name: Run tests
-        run: dotnet test ValidationLibrary\ValidationLibrary.slnx --no-build --configuration Release --verbosity normal
+    - name: Build solution		# Построение решения
+      run: dotnet build --no-restore --configuration Release
+      
+    - name: Run tests			# Запуск тестов
+      run: dotnet test --no-build --configuration Release --verbosity normal
