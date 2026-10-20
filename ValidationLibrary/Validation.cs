@@ -7,7 +7,7 @@
             if (string.IsNullOrEmpty(password) || password.Length < 8)
                 return false;
 
-            // проверка на число
+            // проверка на число 1
             bool isDigit = false;
             foreach (var s in password)
             {
