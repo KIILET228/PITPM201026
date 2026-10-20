@@ -1,36 +1,27 @@
 name: .NET Regression Tests (Preview)
 
-on:
+on:		# Запускается при push и pull request файлов .cs в ветку master
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-latest # ОС виртуальной машины
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4 # Клонирование репозитория на ВМ
 
-      - name: Check file exists (debug)
-        run: ls -la ValidationLibrary/
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x' # Установка .NET 10 на ВМ
 
-      - name: Setup .NET (Preview)
-        uses: actions/setup-dotnet@v4
-        with:
-          # !!! ВСТАВЬ СЮДА ПОЛНУЮ ВЕРСИЮ ИЗ dotnet --list-sdks !!!
-          # Пример: 10.0.100-preview.5.25307.4
-          dotnet-version: '10.0.302'
-          include-prerelease: true
+    - name: Restore dependencies
+      run: dotnet restore 		# Восстановление зависимостей
 
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build solution
-        # Путь с прямым слэшем и правильным расширением
-        run: dotnet build ValidationLibrary/ValidationLibrary.slnx --no-restore --configuration Release
-
-      - name: Run tests
-        run: dotnet test ValidationLibrary/ValidationLibrary.slnx --no-build --configuration Release --verbosity normal
+    - name: Build solution		# Построение решения
+      run: dotnet build --no-restore --configuration Release
+      
+    - name: Run tests			# Запуск тестов
+      run: dotnet test --no-build --configuration Release --verbosity normal
