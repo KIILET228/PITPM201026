@@ -41,9 +41,9 @@ jobs:
       # 4. Собираем решение. 
       # ЗАМЕНИ MySolution.sln на имя твоего файла решения!
       - name: Build solution
-        run: dotnet build ValidationLibrary.sln --no-restore --configuration Release
+        run: dotnet build ValidationLibrary\ValidationLibrary.slnx --no-restore --configuration Release
 
       # 5. Запускаем тесты. 
       # Тесты тоже берутся из того же .sln файла
       - name: Run tests
-        run: dotnet test MySolution.sln --no-build --configuration Release --verbosity normal
+        run: dotnet test ValidationLibrary\ValidationLibrary.slnx --no-build --configuration Release --verbosity normal
