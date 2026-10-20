@@ -16,7 +16,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.0.x' # Установка .NET 10 на ВМ
-
+        
+    - name: Cdto
+      run: cd ValidationLibrary 		# Восстановление зависимосте
+      
     - name: Restore dependencies
       run: dotnet restore 		# Восстановление зависимостей
 
